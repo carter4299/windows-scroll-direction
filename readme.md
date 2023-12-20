@@ -5,7 +5,7 @@
 
 ---
 
-<a href="/ChangeScroll.exe"><h3>Click to Download</h3></a>
+<a href="./ChangeScroll.exe"><h3>Click to Download</h3></a>
 
 <h3 align="center"> 🔭 How It Works ⚡ </h3>
 
