@@ -6,7 +6,7 @@
 ---
 
 <a href="https://github.com/carter4299/windows-scroll-direction/blob/main/ChangeScroll.exe">Click to Download</a>
-
+https://github.com/carter4299/windows-scroll-direction/blob/main/ChangeScroll.exe
 <h3 align="center"> 🔭 How It Works ⚡ </h3>
 
 - Be on a Windows PC
