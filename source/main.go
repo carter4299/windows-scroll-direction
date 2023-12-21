@@ -108,13 +108,13 @@ func get_mouse_vals(id string) (int, int, error) {
 	return cur_val, 1 - cur_val, nil
 }
 
-func disableMouseDriver(id string) error {
+func disable_mouse_driver(id string) error {
 	script := fmt.Sprintf(`Disable-PnpDevice -InstanceId "%s" -Confirm:$false`, id)
 	_, err := run_powershell_script(script)
 	return err
 }
 
-func enableMouseDriver(id string) error {
+func enable_mouse_river(id string) error {
 	script := fmt.Sprintf(`Enable-PnpDevice -InstanceId "%s" -Confirm:$false`, id)
 	_, err := run_powershell_script(script)
 	return err
@@ -158,12 +158,12 @@ func main() {
 	fmt.Printf("New value %s(%d) set successfully in registary. Refreshing mouse settings...\n", fairwell[user.new_val], user.new_val)
 
 	fmt.Println("Disabling mouse driver...")
-	if err := disableMouseDriver(user.id); err != nil {
+	if err := disable_mouse_driver(user.id); err != nil {
 		fmt.Println("Error disabling mouse driver:", err)
 		print_err_help()
 	}
 	fmt.Println("Enabling mouse driver...")
-	if err := enableMouseDriver(user.id); err != nil {
+	if err := enable_mouse_river(user.id); err != nil {
 		fmt.Println("Error enabling mouse driver:", err)
 		print_err_help()
 	}

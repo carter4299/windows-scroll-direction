@@ -25,7 +25,11 @@ Get-ItemProperty -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Enum\\%s\\Device Param
 ```powershell
 script := fmt.Sprintf(`Set-ItemProperty -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Enum\\%s\\Device Parameters" -Name "FlipFlopWheel" -Value %d`, user.id, user.new_val)
 ```
-
+4. Refresh Mouse
+```powershell
+script := fmt.Sprintf(`Disable-PnpDevice -InstanceId "%s" -Confirm:$false`, id)
+script := fmt.Sprintf(`Enable-PnpDevice -InstanceId "%s" -Confirm:$false`, id)
+```
 ---
 
 <h3 align="center"> 💻 Compile Your Own 🖥 </h3>
