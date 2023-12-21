@@ -4,9 +4,13 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
+	"syscall"
+
+	"golang.org/x/sys/windows"
 )
 
 type mouse struct {
@@ -38,6 +42,37 @@ func get_val(s string) (int, error) {
 		}
 	}
 	return -1, fmt.Errorf("No value found in string, mouse ID: %s", s)
+}
+
+func isAdmin() bool {
+	var sid *windows.SID
+
+	err := windows.AllocateAndInitializeSid(&windows.SECURITY_NT_AUTHORITY, 2,
+		windows.SECURITY_BUILTIN_DOMAIN_RID, windows.DOMAIN_ALIAS_RID_ADMINS,
+		0, 0, 0, 0, 0, 0, &sid)
+	if err != nil {
+		return false
+	}
+	defer windows.FreeSid(sid)
+
+	token := windows.Token(0)
+	member, err := token.IsMember(sid)
+	if err != nil {
+		return false
+	}
+
+	return member
+}
+
+func runAsAdmin() error {
+	exe, err := os.Executable()
+	if err != nil {
+		return err
+	}
+
+	cmd := exec.Command("powershell", "Start-Process", exe, "-Verb", "runAs")
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	return cmd.Run()
 }
 
 func run_powershell_script(script string) (string, error) {
@@ -73,9 +108,29 @@ func get_mouse_vals(id string) (int, int, error) {
 	return cur_val, 1 - cur_val, nil
 }
 
+func disableMouseDriver(id string) error {
+	script := fmt.Sprintf(`Disable-PnpDevice -InstanceId "%s" -Confirm:$false`, id)
+	_, err := run_powershell_script(script)
+	return err
+}
+
+func enableMouseDriver(id string) error {
+	script := fmt.Sprintf(`Enable-PnpDevice -InstanceId "%s" -Confirm:$false`, id)
+	_, err := run_powershell_script(script)
+	return err
+}
+
 func main() {
 	fmt.Println("Welcome to the FlipFlopWheel value changer!\n\tStarting...")
 
+	if !isAdmin() {
+		fmt.Println("Requesting administrative privileges...")
+		err := runAsAdmin()
+		if err != nil {
+			log.Fatalf("Failed to start as administrator: %v", err)
+		}
+		return
+	}
 	fairwell := [2]string{"Reverse Scroll", "Natural Scroll"}
 	var user mouse
 	var err error
@@ -100,8 +155,26 @@ func main() {
 		fmt.Println("Error setting new FlipFlopWheel value:", err)
 		print_err_help()
 	}
+	fmt.Printf("New value %s(%d) set successfully in registary. Refreshing mouse settings...\n", fairwell[user.new_val], user.new_val)
 
-	fmt.Printf("FlipFlopWheel value was successfully changed to %s(%d)\n", fairwell[user.new_val], user.new_val)
-	fmt.Println("\nDon't forget to restart your computer to apply changes.")
+	fmt.Println("Disabling mouse driver...")
+	if err := disableMouseDriver(user.id); err != nil {
+		fmt.Println("Error disabling mouse driver:", err)
+		print_err_help()
+	}
+	fmt.Println("Enabling mouse driver...")
+	if err := enableMouseDriver(user.id); err != nil {
+		fmt.Println("Error enabling mouse driver:", err)
+		print_err_help()
+	}
+
+	var tmp1 int
+	tmp1, _, err = get_mouse_vals(user.id)
+	if err != nil {
+		fmt.Println("Error getting FlipFlopWheel value:", err)
+		print_err_help()
+	}
+	fmt.Printf("Your new FlipFlopWheel value is %s(%d)\n", fairwell[tmp1], tmp1)
+
 	good_exit()
 }

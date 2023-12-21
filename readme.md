@@ -10,9 +10,7 @@
 <h3 align="center"> 🔭 How It Works ⚡ </h3>
 
 - Be on a Windows PC
-- Right click to run program as Administrator
 - Have a somewhat modern mouse
-- Restart your computer after running the program.
 
 1. Get mouse ID
 ```powershell
