@@ -1,15 +1,21 @@
-<h1 align="center">Change Windows Scroll Direction</h1>
+<h1 align="center">Change Scroll Direction for Windows</h1>
 
-### Program changes the 🐭 to use the alternate scroll direction
-#### The program automates the process of going in to regedit, finding your mouse id, and changing it.
+### Program modifies the scroll direction for the 🐭 on Window's operating systems. 
+#### Automates the process of going in to regedit, finding your mouse id, and changing it.
+#### Alternates between Reverse Scroll and Natural Scroll.
 
 ---
 
-<a href="/ChangeScroll.exe"><h3>Click to Download</h3></a>
+<a href="https://github.com/carter4299/windows-scroll-direction/blob/main/ChangeScroll.exe">Download Here</a>
 
 <h3 align="center"> 🔭 How It Works ⚡ </h3>
 
+<<<<<<< HEAD
 - Be on a Windows PC
+=======
+- Windows 10/11 os
+- Right click to run program as Administrator
+>>>>>>> e0e1f0d4c00fc89968c6111fda8f94b873b89c42
 - Have a somewhat modern mouse
 
 1. Get mouse ID
