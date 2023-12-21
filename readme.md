@@ -10,12 +10,7 @@
 
 <h3 align="center"> 🔭 How It Works ⚡ </h3>
 
-<<<<<<< HEAD
-- Be on a Windows PC
-=======
 - Windows 10/11 os
-- Right click to run program as Administrator
->>>>>>> e0e1f0d4c00fc89968c6111fda8f94b873b89c42
 - Have a somewhat modern mouse
 
 1. Get mouse ID
