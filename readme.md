@@ -10,8 +10,8 @@
 
 <h3 align="center"> 🔭 How It Works ⚡ </h3>
 
-- Windows 10/11 os
-- Have a somewhat modern mouse
+- Windows 10 os
+- Have a somewhat modern wireless mouse
 
 1. Get mouse ID
 ```powershell
@@ -33,6 +33,9 @@ script := fmt.Sprintf(`Enable-PnpDevice -InstanceId "%s" -Confirm:$false`, id)
 ---
 
 <h3 align="center"> 💻 Compile Your Own 🖥 </h3>
+
+# ❗ FILE IS A .EXE ❗
+If you have Norton or other anti-virus, it propbably won't let you run the downloaded file.
 
 If you dont feel comfortable downloading an .exe -> [Source Code](/source/)
 
